@@ -12,32 +12,31 @@ generator client {
 // to create migrations for them and apply to your dev DB.
 // TODO: Please remove the following example:
 model SeedsSource {
-  id          Int      @id @default(autoincrement())
-  isWeb       Boolean
-  url         String?
-  description String?
-  createdAt   DateTime @default(now())
-  // email String  @unique
-  // PlantVariety PlantVariety[]
+  id           String         @id @default(uuid())
+  isWeb        Boolean        @default(false)
+  url          String?
+  description  String?
+  createdAt    DateTime       @default(now())
+  PlantVariety PlantVariety[]
 }
 
-// model PlantVariety {
-//   id             Int         @id @default(autoincrement())
-//   name           String
-//   description    String?
-//   seedsSource    SeedsSource @relation(fields: [seedsSourceId], references: [id])
-//   seedsSourceId  Int
-//   daysToMaturity Int?
-//   Planting       Planting[]
-// }
+model PlantVariety {
+  id             String      @id @default(uuid())
+  name           String
+  description    String?
+  seedsSource    SeedsSource @relation(fields: [seedsSourceId], references: [id])
+  seedsSourceId  String
+  daysToMaturity Int?
+  Planting       Planting[]
+}
 
-// model Planting {
-//   id               Int          @id @default(autoincrement())
-//   name             String
-//   datePlanted      DateTime
-//   notes            String?
-//   isSuccession     Boolean
-//   successionPeriod Int?
-//   variety          PlantVariety @relation(fields: [plantVarietyId], references: [id])
-//   plantVarietyId   Int
-// }
+model Planting {
+  id               String       @id @default(uuid())
+  name             String
+  datePlanted      DateTime
+  notes            String?
+  isSuccession     Boolean      @default(false)
+  successionPeriod Int?
+  variety          PlantVariety @relation(fields: [plantVarietyId], references: [id])
+  plantVarietyId   String
+}

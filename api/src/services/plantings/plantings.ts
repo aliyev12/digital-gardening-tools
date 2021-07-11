@@ -38,6 +38,7 @@ interface CreatePlantingArgs {
 
 export const createPlanting = ({ input }: CreatePlantingArgs) => {
   validate(input)
+  requireAuth()
   return db.planting.create({
     data: input,
   })
@@ -48,6 +49,7 @@ interface UpdatePlantingArgs extends Prisma.PlantingWhereUniqueInput {
 }
 
 export const updatePlanting = ({ id, input }: UpdatePlantingArgs) => {
+  requireAuth()
   return db.planting.update({
     data: input,
     where: { id },
@@ -55,6 +57,7 @@ export const updatePlanting = ({ id, input }: UpdatePlantingArgs) => {
 }
 
 export const deletePlanting = ({ id }: Prisma.PlantingWhereUniqueInput) => {
+  requireAuth()
   return db.planting.delete({
     where: { id },
   })

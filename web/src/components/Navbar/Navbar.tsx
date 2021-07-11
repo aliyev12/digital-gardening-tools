@@ -12,13 +12,18 @@ import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import MailIcon from '@material-ui/icons/Mail'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import NotificationsIcon from '@material-ui/icons/Notifications'
+import Button from '@material-ui/core/Button'
+
 import MoreIcon from '@material-ui/icons/MoreVert'
 import { Logo } from 'src/components/Reusable'
 import { useStyles } from './Navbar.styles'
+import { useAuth } from '@redwoodjs/auth'
 
 const Navbar = () => {
   const classes = useStyles()
+  const { logIn, logOut, isAuthenticated, currentUser } = useAuth()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
@@ -118,27 +123,44 @@ const Navbar = () => {
             Digital Gardening Tools
           </Typography>
           <div className={classes.grow} />
+          <h4 style={{ marginRight: '10px' }}>
+            {isAuthenticated && currentUser.email}
+          </h4>
+
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
+            {/* <IconButton
+              aria-label="show 4 new mails"
+              color="inherit"
+              onClick={logIn}
+            >
               <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+                <ExitToAppIcon />
               </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            </IconButton> */}
+            {/* <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
                 <NotificationsIcon />
               </Badge>
-            </IconButton>
-            <IconButton
+            </IconButton> */}
+            {/* <IconButton
               edge="end"
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              onClick={logIn}
               color="inherit"
             >
-              <AccountCircle />
-            </IconButton>
+              <ExitToAppIcon />
+            </IconButton> */}
+
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={isAuthenticated ? logOut : logIn}
+              endIcon={<ExitToAppIcon>send</ExitToAppIcon>}
+            >
+              {isAuthenticated ? 'Log out' : 'Log in'}
+            </Button>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
